@@ -10,6 +10,9 @@ namespace Projeto1Criptografia
     {
         public abstract string encrypt(string strToEncrypt);
 
-        public abstract string decrypt(string strToDecrypt);
+        public virtual string decrypt(string strToDecrypt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

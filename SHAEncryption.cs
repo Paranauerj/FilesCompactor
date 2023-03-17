@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,14 +9,24 @@ namespace Projeto1Criptografia
 {
     public class SHAEncryption : Encryption
     {
-        public override string decrypt(string strToDecrypt)
+
+        public SHA256 shaAlgorithm { get; set; }
+
+        public SHAEncryption()
         {
-            throw new NotImplementedException();
+            this.shaAlgorithm = SHA256.Create();
         }
 
         public override string encrypt(string strToEncrypt)
         {
-            throw new NotImplementedException();
+            byte[] bytes = shaAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(strToEncrypt));
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                builder.Append(bytes[i].ToString("x2"));
+            }
+            return builder.ToString();
         }
     }
 }
