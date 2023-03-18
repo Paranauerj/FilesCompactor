@@ -10,14 +10,18 @@ namespace Projeto1Criptografia
 
         public Aes aesAlgorithm { get; set; }  
         private readonly string keyBase64 = "/vD2mxah4q0t4geE0GFuNqo1QqG5w+aGK3G0/8Gm3CI=";
+        private readonly string ivBase64 = "OfgHAh/ygexZhp2KARmTGA==";
 
         public AESEncryption()
         {
-            // aesAlgorithm.GenerateKey();
             this.aesAlgorithm = Aes.Create();
             aesAlgorithm.KeySize = 256;
+
+            // aesAlgorithm.GenerateKey();
             aesAlgorithm.Key = Convert.FromBase64String(keyBase64);
-            aesAlgorithm.GenerateIV();
+           
+            // aesAlgorithm.GenerateIV();
+            aesAlgorithm.IV = Convert.FromBase64String(ivBase64);
         }
 
         public override string decrypt(string strToDecrypt)
