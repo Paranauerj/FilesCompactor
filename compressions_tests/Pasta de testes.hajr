@@ -1,24 +1,24 @@
 {
   "Name": "Pasta de testes",
-  "Date": "2023-03-19T19:13:02.0888903+00:00",
+  "Date": "2023-03-19T19:35:55.6078172+00:00",
   "Signature": "assinatura válida",
-  "Hash": "e7201b6b8b8dd5deb8f08bb73cf9acdf2803d0eb5f0f4c452caffd21924819e2",
+  "Hash": "447d70a7660679177fe4e2437743d1671ec5240f552b1438c76bf3d0e25359bb",
   "FilesCompressed": [
     {
       "Name": "a.txt",
-      "Data": "qij3kUA9FxKzjV9LEe6rvQ=="
+      "Data": "ElRTf6Wuk5PlO2wENFW4rFsjEscI4/QaaCTf8r1LL24="
     },
     {
       "Name": "subpasta 1\\bb.txt",
-      "Data": "YjzaDiZLOWa/2a7YmbimAdkkEAXkpfFG2opo3ASH48I="
+      "Data": "oZXPv8STyGg5afovCsXCbhtITefU6p0UWPM5hmhBKAhQg2/hEXFYcsyhcOxK1oIB"
     },
     {
       "Name": "subpasta 2\\c.txt",
-      "Data": "BHV/dtSeQXL1PUejxU4V4Q=="
+      "Data": "YrNYwde0BEzGijyCNJr2WnkngFm103bQ/WAAdYIYPog="
     },
     {
       "Name": "subpasta 1\\Sub sub pasta\\coéé.txt",
-      "Data": "HVYCafmwxHEUoX0trSoUvA=="
+      "Data": "RNjMmx6F79f7Q+Ggo4u8N5iaEcbvXr+3ODypS1dgwC8="
     }
   ]
 }

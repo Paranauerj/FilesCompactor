@@ -29,7 +29,7 @@ Console.WriteLine("Oi encriptado em sha256: " + shaenc.encrypt(decryptedPlainTex
 var comp = new Compressor();
 
 // comp.Compress(@"D:\Users\jptin\Desktop\Programação\só testando utad", @"D:\Users\jptin\Desktop\Programação\");
-comp.Decompress(@"D:\Users\jptin\Desktop\Programação\só testando utad.hajr", @"D:\Users\jptin\Desktop\Programação\");
+// comp.Decompress(@"D:\Users\jptin\Desktop\Programação\só testando utad.hajr", @"D:\Users\jptin\Desktop\Programação\");
 
 // pasta default: ver raiz do projeto visual studio
 // comp.Compress();
