@@ -15,3 +15,6 @@ Console.WriteLine("Texto decriptado: " + decryptedPlainText);
 
 SHAEncryption shaenc = new SHAEncryption();
 Console.WriteLine("Oi encriptado em sha256: " + shaenc.encrypt(decryptedPlainText));
+
+var comp = new Compressor();
+comp.Compress();

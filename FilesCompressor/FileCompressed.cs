@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Projeto1Criptografia.FilesCompressor
+namespace Projeto1Criptografia
 {
     public class FileCompressed
     {

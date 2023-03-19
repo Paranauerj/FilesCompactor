@@ -1,0 +1,23 @@
+{
+  "Name": "Pasta de testes",
+  "Date": "2023-03-19T02:55:36.6830403+00:00",
+  "Hash": "44d34403161238e272a50aca52c6fd1c7d90235b13cd6737038aa6f0da03a1aa",
+  "FilesCompressed": [
+    {
+      "Name": "a.txt",
+      "Data": "qij3kUA9FxKzjV9LEe6rvQ=="
+    },
+    {
+      "Name": "subpasta 1\\bb.txt",
+      "Data": "YjzaDiZLOWa/2a7YmbimAdkkEAXkpfFG2opo3ASH48I="
+    },
+    {
+      "Name": "subpasta 2\\c.txt",
+      "Data": "BHV/dtSeQXL1PUejxU4V4Q=="
+    },
+    {
+      "Name": "subpasta 1\\Sub sub pasta\\coéé.txt",
+      "Data": "HVYCafmwxHEUoX0trSoUvA=="
+    }
+  ]
+}
