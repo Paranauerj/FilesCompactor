@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace Projeto1Criptografia.Encryption
+namespace Projeto1Criptografia
 {
-    internal class RSA_Encryption : Encryption
+    public class RSA_Encryption : Encryption
     {
         public RSA rsaAlgorithm { get; set; }
         public RSA_Encryption()
