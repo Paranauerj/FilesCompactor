@@ -17,42 +17,75 @@ namespace Projeto1Criptografia
         {
             AESEncryption = new AESEncryption();
             SHAEncryption = new SHAEncryption();
+
+            // Algumas observações
+            /*
+             * Para encriptografar, ele lê os bytes dos ficheiros, converte os ficheiros (bytes) pra base 64 e depois encripta a base64
+             * Para decriptografar, ele pega o conteúdo dos ficheiros (base64), decripta e depois converte para bytes, e por fim salva
+             * 
+             * Isso permite que imagens, vídeos e outros arquivos com diferentes encodings
+             * possam ser criptografados. Se fosse só em strings, as imagens, vídeos, etc. não abrem
+             */
         }
 
-        public void Compress()
+        public void Compress(string targetDirectoryArg = "", string pathToSave = "")
         {
-            // string rootFolder = @"./";
-            string rootFolder = @"./Pasta de testes";
+            string rootFolder = targetDirectoryArg == "" ? @"../../../decompression_tests/Pasta de testes" : targetDirectoryArg;
 
-            var compressed = new List<FileCompressed>();
+            var compressedFiles = new List<FileCompressed>();
             var compressedDataFile = new CompressedDataFile();
 
             compressedDataFile.Date = DateTime.Now;
             compressedDataFile.Name = Path.GetFileName(rootFolder);
 
             string[] allFiles = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
-            string payload = compressedDataFile.Name + compressedDataFile.Date.ToString();
 
             foreach (string file in allFiles)
             {
                 string fileName = file.Substring(rootFolder.Length + 1);
-                Console.WriteLine(fileName);
-                string fileContent = File.ReadAllText(file);
-                payload += fileName + fileContent;
+                byte[] fileContentInBytes = File.ReadAllBytes(file);
+                string fileContent = Convert.ToBase64String(fileContentInBytes);
 
-                compressed.Add(new FileCompressed()
+                compressedFiles.Add(new FileCompressed()
                 {
                     Name = fileName,
                     Data = this.AESEncryption.encrypt(fileContent)
                 });
             }
 
-            compressedDataFile.Hash = this.SHAEncryption.encrypt(payload);
-            compressedDataFile.FilesCompressed = compressed;
+            compressedDataFile.FilesCompressed = compressedFiles;
+
+            // Assinar ficheiro com RSA
+            compressedDataFile.Signature = "assinatura válida";
+
+            compressedDataFile.Hash = this.SHAEncryption.encrypt(compressedDataFile.getPayload());
 
             string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
-            File.WriteAllText("../../../compressions_tests/" + compressedDataFile.Name + ".hajr", json);
+            File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", json);
 
         }
+
+        public void Decompress(string fileWithPath = "", string targetDirectoryArg = "")
+        {
+            string file = fileWithPath == "" ? @"../../../compressions_tests/Pasta de testes.hajr" : fileWithPath;
+            string fileContent = File.ReadAllText(file);
+
+            var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
+
+            // verificar a assinatura. se for inválida, dizer q é inválida e parar execução
+
+            var targetDirectory = (targetDirectoryArg == "" ? @"../../../decompression_tests/" : targetDirectoryArg) + compressedDataFile.Name;
+            Directory.CreateDirectory(targetDirectory);
+
+            foreach(var fileToWrite in compressedDataFile.FilesCompressed)
+            {
+                var filePath = targetDirectory + "/" + fileToWrite.Name;
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                byte[] fileBytes = Convert.FromBase64String(this.AESEncryption.decrypt(fileToWrite.Data));
+                File.WriteAllBytes(filePath, fileBytes);
+            }
+        }
+
     }
 }

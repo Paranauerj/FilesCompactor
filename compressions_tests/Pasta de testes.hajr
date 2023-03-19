@@ -1,7 +1,8 @@
 {
   "Name": "Pasta de testes",
-  "Date": "2023-03-19T02:55:36.6830403+00:00",
-  "Hash": "44d34403161238e272a50aca52c6fd1c7d90235b13cd6737038aa6f0da03a1aa",
+  "Date": "2023-03-19T19:13:02.0888903+00:00",
+  "Signature": "assinatura válida",
+  "Hash": "e7201b6b8b8dd5deb8f08bb73cf9acdf2803d0eb5f0f4c452caffd21924819e2",
   "FilesCompressed": [
     {
       "Name": "a.txt",
