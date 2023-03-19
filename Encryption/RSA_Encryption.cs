@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 
-namespace Projeto1Criptografia
+namespace Projeto1Criptografia.Encryption
 {
     internal class RSA_Encryption : Encryption
     {
         public RSA rsaAlgorithm { get; set; }
         public RSA_Encryption()
         {
-            this.rsaAlgorithm = RSA.Create();
+            rsaAlgorithm = RSA.Create();
         }
 
         public void GenerateKeys(out RSAParameters publicKey, out RSAParameters privateKey)
@@ -38,7 +38,7 @@ namespace Projeto1Criptografia
                 return decryptedMessage;
             }
         }
-        
+
         public override string encrypt_b(string strToEncrypt, RSAParameters publicKey)
         {
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
