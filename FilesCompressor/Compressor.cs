@@ -86,6 +86,5 @@ namespace Projeto1Criptografia
                 File.WriteAllBytes(filePath, fileBytes);
             }
         }
-
     }
 }
