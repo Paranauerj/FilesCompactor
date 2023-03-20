@@ -8,20 +8,20 @@ using System.Security.Cryptography;
 namespace Projeto1Criptografia
 {
     public class RSA_Encryption : Encryption
-    {
+    {/*
         public RSA rsaAlgorithm { get; set; }
         public RSA_Encryption()
         {
             rsaAlgorithm = RSA.Create();
-        }
+        }*/
 
         public void GenerateKeys(out RSAParameters publicKey, out RSAParameters privateKey)
         {
-            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-            {
-                publicKey = rsa.ExportParameters(false);
-                privateKey = rsa.ExportParameters(true);
-            }
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+
+            publicKey = rsa.ExportParameters(false);
+            privateKey = rsa.ExportParameters(true);
+
         }
 
         public override string decrypt_b(string strToDecrypt, RSAParameters privateKey)
@@ -41,15 +41,46 @@ namespace Projeto1Criptografia
 
         public override string encrypt_b(string strToEncrypt, RSAParameters publicKey)
         {
-            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-            {
-                rsa.ImportParameters(publicKey);
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.ImportParameters(publicKey);
 
-                byte[] messageBytes = Encoding.UTF8.GetBytes(strToEncrypt);
-                byte[] encryptedBytes = rsa.Encrypt(messageBytes, false);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(strToEncrypt);
+            byte[] encryptedBytes = rsa.Encrypt(messageBytes, false);
 
-                return Convert.ToBase64String(encryptedBytes);
-            }
+            return Convert.ToBase64String(encryptedBytes);
+        }
+
+        //public static byte[] CreateSignature(byte[] dataToSign, RSAParameters privateKey)
+        public byte[] CreateSignature(string dataToSign, RSAParameters privateKey)
+        {
+            byte[] data = Convert.FromBase64String(dataToSign);
+
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.ImportParameters(privateKey);
+            /*
+            byte[] hashBytes = new SHA256Managed().ComputeHash(data);
+            byte[] signatureBytes = rsa.SignHash(hashBytes, CryptoConfig.MapNameToOID("SHA256"));
+
+            return signatureBytes;*/
+
+            return rsa.SignData(data, SHA256.Create());
+        }
+
+        //public bool VerifySignature(byte[] dataToVerify, byte[] signedData, RSAParameters publicKey)
+        public bool VerifySignature(string dataToVerify, byte[] signedData, RSAParameters publicKey)
+        {
+            byte[] data = Convert.FromBase64String(dataToVerify);
+
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            rsa.ImportParameters(publicKey);
+            /*
+            byte[] hashBytes = new SHA256Managed().ComputeHash(data);
+
+            bool signatureIsValid = rsa.VerifyHash(hashBytes, CryptoConfig.MapNameToOID("SHA256"), signedData);
+
+            return signatureIsValid;
+            */
+            return rsa.VerifyData(data, SHA256.Create(), signedData);
         }
     }
 }
