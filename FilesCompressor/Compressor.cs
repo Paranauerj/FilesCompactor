@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace Projeto1Criptografia
 {
     public class Compressor
     {
+        public RSAParameters publicKey { get; set; }
+        public RSAParameters privateKey { get; set; }
 
         private AESEncryption AESEncryption { get; }
         private SHAEncryption SHAEncryption { get; }
@@ -17,6 +20,14 @@ namespace Projeto1Criptografia
         {
             AESEncryption = new AESEncryption();
             SHAEncryption = new SHAEncryption();
+
+            RSAParameters publicK, privateK;
+
+            RSA_Encryption rsa = new RSA_Encryption();
+            rsa.GenerateKeys(out publicK, out privateK);
+            this.privateKey = privateK;
+            this.publicKey = publicK;
+
 
             // Algumas observações
             /*
@@ -56,7 +67,8 @@ namespace Projeto1Criptografia
             compressedDataFile.FilesCompressed = compressedFiles;
 
             // Assinar ficheiro com RSA
-            compressedDataFile.Signature = "assinatura válida";
+            CompressedDataFile cdf = new CompressedDataFile();
+            compressedDataFile.Signature = cdf.GenerateSignature(this.privateKey, compressedFiles);
 
             compressedDataFile.Hash = this.SHAEncryption.encrypt(compressedDataFile.getPayload());
 
@@ -73,6 +85,25 @@ namespace Projeto1Criptografia
             var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
 
             // verificar a assinatura. se for inválida, dizer q é inválida e parar execução
+            RSA_Encryption rsa = new RSA_Encryption();
+
+            string signature = compressedDataFile.Signature;
+            byte[] sign = Convert.FromBase64String(signature);
+
+
+            if (sign == null)
+            {
+                Console.WriteLine("Sem assinatura");
+                return;
+            }
+
+            if (rsa.VerifySignature(Convert.ToBase64String(compressedDataFile.GetBytes(compressedDataFile.FilesCompressed)), sign, this.publicKey))
+                Console.WriteLine("Assinatura Válida");
+            else
+            {
+                Console.WriteLine("Assinatura inválida");
+                return;
+            }
 
             var targetDirectory = (targetDirectoryArg == "" ? @"../../../decompression_tests/" : targetDirectoryArg) + compressedDataFile.Name;
             Directory.CreateDirectory(targetDirectory);

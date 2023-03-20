@@ -50,7 +50,6 @@ namespace Projeto1Criptografia
             return Convert.ToBase64String(encryptedBytes);
         }
 
-        //public static byte[] CreateSignature(byte[] dataToSign, RSAParameters privateKey)
         public byte[] CreateSignature(string dataToSign, RSAParameters privateKey)
         {
             byte[] data = Convert.FromBase64String(dataToSign);
@@ -66,7 +65,6 @@ namespace Projeto1Criptografia
             return rsa.SignData(data, SHA256.Create());
         }
 
-        //public bool VerifySignature(byte[] dataToVerify, byte[] signedData, RSAParameters publicKey)
         public bool VerifySignature(string dataToVerify, byte[] signedData, RSAParameters publicKey)
         {
             byte[] data = Convert.FromBase64String(dataToVerify);
@@ -81,6 +79,11 @@ namespace Projeto1Criptografia
             return signatureIsValid;
             */
             return rsa.VerifyData(data, SHA256.Create(), signedData);
+        }
+
+        internal bool VerifySignature(CompressedDataFile compressedDataFile, string sign, RSAParameters publicKey)
+        {
+            throw new NotImplementedException();
         }
     }
 }

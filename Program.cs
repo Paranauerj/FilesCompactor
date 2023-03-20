@@ -16,6 +16,7 @@ Console.WriteLine("Texto decriptado: " + decryptedPlainText);
 SHAEncryption shaenc = new SHAEncryption();
 Console.WriteLine("Oi encriptado em sha256: " + shaenc.encrypt(decryptedPlainText));
 */
+/*
 Console.WriteLine("### RSA Encryption ###");
 Console.WriteLine("Frase Original: " + plainText);
 
@@ -30,13 +31,13 @@ Console.WriteLine("Signature: " + Convert.ToBase64String(signature));
 
 Console.WriteLine("Decrypted: " + rsa.decrypt_b(rsaEncripted, privateKey));
 bool signatureVeracity = rsa.VerifySignature(rsaEncripted, signature, publicKey);
-Console.WriteLine(signatureVeracity);
+Console.WriteLine(signatureVeracity);*/
 
-//var comp = new Compressor();
+var comp = new Compressor();
 
 // comp.Compress(@"D:\Users\jptin\Desktop\Programação\só testando utad", @"D:\Users\jptin\Desktop\Programação\");
 // comp.Decompress(@"D:\Users\jptin\Desktop\Programação\só testando utad.hajr", @"D:\Users\jptin\Desktop\Programação\");
 
 // pasta default: ver raiz do projeto visual studio
-// comp.Compress();
-// comp.Decompress();
+comp.Compress();
+comp.Decompress();
