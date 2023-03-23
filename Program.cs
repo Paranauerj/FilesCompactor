@@ -35,8 +35,8 @@ Console.WriteLine(signatureVeracity);*/
 
 var comp = new Compressor();
 
-// comp.Compress(@"D:\Users\jptin\Desktop\Programação\só testando utad", @"D:\Users\jptin\Desktop\Programação\");
-// comp.Decompress(@"D:\Users\jptin\Desktop\Programação\só testando utad.hajr", @"D:\Users\jptin\Desktop\Programação\");
+// comp.Compress(targetDirectoryArg: @"D:\Users\jptin\Desktop\Programação\só testando utad", pathToSave: @"D:\Users\jptin\Desktop\Programação\", password: "oi");
+// comp.Decompress(fileWithPath: @"D:\Users\jptin\Desktop\Programação\só testando utad.hajr", targetDirectoryArg: @"D:\Users\jptin\Desktop\Programação\", password: "oi");
 
 // pasta default: ver raiz do projeto visual studio
 comp.Compress();

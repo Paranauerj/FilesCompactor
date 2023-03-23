@@ -1,8 +1,9 @@
 {
   "Name": "Pasta de testes",
-  "Date": "2023-03-23T21:58:54.2821161+00:00",
-  "Signature": "c017EScWNgPwn0RAWUN4vAp1kom2lmRINqOF2JaGdnsVGIsKgDkwLZgk1HJjfWWQmUsJdwEPGf+uJfh0BZ3Mgs1MK0DMosuP0wdpTtgVkPmWFXIPvsDo3sVs0j7+PH7FEurDnZ7/cAZSMuzinyR/HfvK0er1Vwz5XQuFwCh69gY=",
-  "Hash": "5a99c52d37b236a384f61050d79c85e38cdd4d8f7185b7eee5787b9a1afc4cfa",
+  "Date": "2023-03-23T22:23:42.6982375+00:00",
+  "Signature": "5Mke9z6X0FmP9FfVFx2JUleDsQm9/oNduyrH2Wf8r2qZv8O6pBSqiR9ijjYR6xTGit3zn9Esjn2oNwJSEcFMZhx/ESRGBzlNiRKaylu03qQA6ueczfBy9/Hejlhcg9bEUy0sweRp08/zTYCh4Rswde7GgkbISMOGCTfN50Mzq3k=",
+  "Hash": "850623e6755104627656ecbb483b561401e94e7ded304db9fe6d44523130335c",
+  "Password": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "FilesCompressed": [
     {
       "Name": "a.txt",

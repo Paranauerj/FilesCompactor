@@ -31,7 +31,7 @@ namespace Projeto1Criptografia
              */
         }
 
-        public void Compress(string targetDirectoryArg = "", string pathToSave = "")
+        public void Compress(string password = "", string targetDirectoryArg = "", string pathToSave = "")
         {
             string rootFolder = targetDirectoryArg == "" ? @"../../../decompression_tests/Pasta de testes" : targetDirectoryArg;
 
@@ -40,9 +40,9 @@ namespace Projeto1Criptografia
 
             compressedDataFile.Date = DateTime.Now;
             compressedDataFile.Name = Path.GetFileName(rootFolder);
+            compressedDataFile.Password = this.SHAEncryption.encrypt(password);
 
             string[] allFiles = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
-
             foreach (string file in allFiles)
             {
                 string fileName = file.Substring(rootFolder.Length + 1);
@@ -68,7 +68,7 @@ namespace Projeto1Criptografia
 
         }
 
-        public void Decompress(string fileWithPath = "", string targetDirectoryArg = "")
+        public void Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
         {
             string file = fileWithPath == "" ? @"../../../compressions_tests/Pasta de testes.hajr" : fileWithPath;
             string fileContent = File.ReadAllText(file);
@@ -79,6 +79,12 @@ namespace Projeto1Criptografia
             if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
             {
                 Console.WriteLine("Nao foi possivel garantir a integridade do ficheiro!");
+                return;
+            }
+
+            if (compressedDataFile.Password != this.SHAEncryption.encrypt(password))
+            {
+                Console.WriteLine("Palavra-passe invalida");
                 return;
             }
 
