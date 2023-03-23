@@ -18,24 +18,9 @@ namespace Projeto1Criptografia
         //publicKey do criador
         //assinatua do criador
 
-        public byte[] GetBytes(List<FileCompressed> FilesCompressed)
-        {
-            List<byte> byteList = new List<byte>();
-            foreach (FileCompressed obj in FilesCompressed)
-            {
-                byteList.AddRange(Encoding.ASCII.GetBytes(obj.Name));
-                byteList.AddRange(Encoding.ASCII.GetBytes(obj.Data));
-            }
-
-            byte[] byteArray = byteList.ToArray();
-
-            return byteArray;
-        }
-
         public string getPayload()
         {
             string payload = "name:" + this.Name + "date:" + this.Date.ToString();
-            payload += "signature:" + this.Signature;
 
             foreach(var file in FilesCompressed)
             {

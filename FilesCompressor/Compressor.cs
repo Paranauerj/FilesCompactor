@@ -75,6 +75,13 @@ namespace Projeto1Criptografia
 
             var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
 
+            // Verifica se o hash atual coincide com o conteúdo do ficheiro. Se não for, diz e para de executar
+            if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
+            {
+                Console.WriteLine("Nao foi possivel garantir a integridade do ficheiro!");
+                return;
+            }
+
             // verificar a assinatura. se for inválida, dizer q é inválida e parar execução
             string signature = compressedDataFile.Signature;
             byte[] sign = Convert.FromBase64String(signature);
@@ -104,7 +111,15 @@ namespace Projeto1Criptografia
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
                 byte[] fileBytes = Convert.FromBase64String(this.AESEncryption.decrypt(fileToWrite.Data));
-                File.WriteAllBytes(filePath, fileBytes);
+
+                try
+                {
+                    File.WriteAllBytes(filePath, fileBytes);
+                }
+                catch
+                {
+                    // Console.WriteLine("Ocorreu um problema ao salvar o ficheiro {0}. Ele pode ter sido corrompido ou decomprimido com sucesso. Abra-o e verifique", filePath);
+                }
             }
         }
     }

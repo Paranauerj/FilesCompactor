@@ -18,15 +18,5 @@ namespace Projeto1Criptografia
         {
             throw new NotImplementedException();
         }
-
-        public virtual string encrypt_b(string strToEncrypt, RSAParameters publicKey)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual string decrypt_b(string strToDecrypt, RSAParameters privateKey)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
