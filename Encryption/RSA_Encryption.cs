@@ -12,16 +12,24 @@ namespace Projeto1Criptografia
     {
         public RSAParameters publicKey { get; set; }
         public RSAParameters privateKey { get; set; }
+        public RSAParameters creatorPublicKey { get; set; }
+        public RSAParameters creatorPrivateKey { get; set; }
 
         public string PublicKeyString { get; set; } = "9iOtmfM3kXsg+Hp9FDu1kbFCQW1bJjuNUw2KrGR5bELsB60emaRPAjfPPxCZMrLy9/oEj2Q3Veir6417YbtGT1NzRV6j9rX06Uk3qPWAIUoJNqweWUB+G7qgHWjBNhj5j3EwzYlY3rmC4K6j0P2oNVX8/97/USaMcZt2e20IXyE=,AQAB";
 
         public RSA_Encryption()
         {
-            RSAParameters publicK, privateK;
+            RSAParameters publicK, privateK, cpublicK, cprivateK;
 
-            GenerateKeys(out _, out privateK);
+            GenerateKeys(out publicK, out privateK);
             this.privateKey = privateK;
+            this.publicKey = publicK;
 
+            GenerateKeys(out cprivateK, out cpublicK);
+            this.creatorPrivateKey = cprivateK;
+            this.creatorPublicKey = cpublicK;
+
+            /*
             string[] publicKeyParts = PublicKeyString.Split(',');
             RSAParameters publicKeyFromStr = new RSAParameters();
             publicKeyFromStr.Modulus = Convert.FromBase64String(publicKeyParts[0]);
@@ -34,7 +42,7 @@ namespace Projeto1Criptografia
             this.publicKey = (RSAParameters)serializer.Deserialize(sr);*/
 
             // Cria uma instância do provedor de criptografia RSA e define seus parâmetros
-           // RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            // RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
             //rsa.ImportParameters(rsaParams);
         }
 
@@ -90,18 +98,22 @@ namespace Projeto1Criptografia
             return Convert.ToBase64String(encryptedBytes);
         }
 
-        public byte[] CreateSignature(string dataToSign)
+        public byte[] CreateSignature(string dataToSign, RSAParameters cPrivateKey)
         {
             byte[] data = Convert.FromBase64String(dataToSign);
 
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-            rsa.ImportParameters(privateKey);
+            rsa.ImportParameters(cPrivateKey);
 
             return rsa.SignData(data, SHA256.Create());
         }
 
-        public bool VerifySignature(string dataToVerify, byte[] signedData)//+PublicKey do criador
+        public bool VerifySignature(string dataToVerify, byte[] signedData, RSAParameters cPublicKey)//+PublicKey do criador
+                                                                                                     //diffie-helman
         {
+            if (cPublicKey.Modulus.SequenceEqual(this.creatorPublicKey.Modulus) == false || cPublicKey.Exponent.SequenceEqual(this.creatorPublicKey.Exponent) == false)
+                return false;
+
             byte[] data = Convert.FromBase64String(dataToVerify);
 
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
@@ -112,7 +124,7 @@ namespace Projeto1Criptografia
 
         public string GenerateSignature(string str)
         {
-            byte[] signature = CreateSignature(str);
+            byte[] signature = CreateSignature(str, privateKey);
             return Convert.ToBase64String(signature);
         }
     }

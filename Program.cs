@@ -1,7 +1,7 @@
 ﻿using Projeto1Criptografia;
 using System.Security.Cryptography;
 
-string plainText = "Oi";
+//string plainText = "Oi";
 /*
 AESEncryption enc = new AESEncryption();
 

@@ -100,7 +100,7 @@ namespace Projeto1Criptografia
             }
 
             //if (rsa.VerifySignature(Convert.ToBase64String(compressedDataFile.GetBytes(compressedDataFile.FilesCompressed)), sign, this.publicKey))
-            if (RSA_Encryption.VerifySignature(compressedDataFile.Hash, sign))
+            if (RSA_Encryption.VerifySignature(compressedDataFile.Hash, sign, RSA_Encryption.creatorPublicKey))
                 Console.WriteLine("Assinatura Válida");
             else
             {
