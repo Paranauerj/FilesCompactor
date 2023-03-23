@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="compressions_tests\" />
     <Folder Include="decompression_tests\" />
   </ItemGroup>
 

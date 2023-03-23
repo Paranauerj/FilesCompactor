@@ -15,6 +15,9 @@ namespace Projeto1Criptografia
         public string Hash { get; set; }
         public List<FileCompressed> FilesCompressed { get; set; }
 
+        //publicKey do criador
+        //assinatua do criador
+
         public byte[] GetBytes(List<FileCompressed> FilesCompressed)
         {
             List<byte> byteList = new List<byte>();
@@ -27,18 +30,6 @@ namespace Projeto1Criptografia
             byte[] byteArray = byteList.ToArray();
 
             return byteArray;
-        }
-
-        public string GenerateSignature(RSAParameters privateKey, List<FileCompressed> FilesCompressed)
-        {
-            RSA_Encryption rsa = new RSA_Encryption();
-
-            byte[] byteArray = GetBytes(FilesCompressed);
-
-            byte[] signature = rsa.CreateSignature(Convert.ToBase64String(byteArray), privateKey);
-            this.Signature = Convert.ToBase64String(signature);
-
-            return this.Signature;
         }
 
         public string getPayload()

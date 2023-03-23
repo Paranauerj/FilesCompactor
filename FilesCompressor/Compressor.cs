@@ -10,25 +10,17 @@ namespace Projeto1Criptografia
 {
     public class Compressor
     {
-        public RSAParameters publicKey { get; set; }
-        public RSAParameters privateKey { get; set; }
 
         private AESEncryption AESEncryption { get; }
         private SHAEncryption SHAEncryption { get; }
+        private RSA_Encryption RSA_Encryption { get; }
 
         public Compressor()
         {
             AESEncryption = new AESEncryption();
             SHAEncryption = new SHAEncryption();
-
-            RSAParameters publicK, privateK;
-
-            RSA_Encryption rsa = new RSA_Encryption();
-            rsa.GenerateKeys(out publicK, out privateK);
-            this.privateKey = privateK;
-            this.publicKey = publicK;
-
-
+            RSA_Encryption = new RSA_Encryption();
+            
             // Algumas observações
             /*
              * Para encriptografar, ele lê os bytes dos ficheiros, converte os ficheiros (bytes) pra base 64 e depois encripta a base64
@@ -66,11 +58,10 @@ namespace Projeto1Criptografia
 
             compressedDataFile.FilesCompressed = compressedFiles;
 
-            // Assinar ficheiro com RSA
-            CompressedDataFile cdf = new CompressedDataFile();
-            compressedDataFile.Signature = cdf.GenerateSignature(this.privateKey, compressedFiles);
-
             compressedDataFile.Hash = this.SHAEncryption.encrypt(compressedDataFile.getPayload());
+
+            // Assinar ficheiro com RSA
+            compressedDataFile.Signature = RSA_Encryption.GenerateSignature(compressedDataFile.Hash);
 
             string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
             File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", json);
@@ -85,8 +76,6 @@ namespace Projeto1Criptografia
             var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
 
             // verificar a assinatura. se for inválida, dizer q é inválida e parar execução
-            RSA_Encryption rsa = new RSA_Encryption();
-
             string signature = compressedDataFile.Signature;
             byte[] sign = Convert.FromBase64String(signature);
 
@@ -97,7 +86,8 @@ namespace Projeto1Criptografia
                 return;
             }
 
-            if (rsa.VerifySignature(Convert.ToBase64String(compressedDataFile.GetBytes(compressedDataFile.FilesCompressed)), sign, this.publicKey))
+            //if (rsa.VerifySignature(Convert.ToBase64String(compressedDataFile.GetBytes(compressedDataFile.FilesCompressed)), sign, this.publicKey))
+            if (RSA_Encryption.VerifySignature(compressedDataFile.Hash, sign))
                 Console.WriteLine("Assinatura Válida");
             else
             {
