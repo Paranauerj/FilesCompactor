@@ -1,7 +1,7 @@
 ﻿using Projeto1Criptografia;
 
 var comp = new Compressor();
-var rsaE = new RSAEncryption();
+var aesE = new AESEncryption();
 
 void ShowMenu()
 {
@@ -104,13 +104,13 @@ void Op3()
         switch (op)
         {
             case "1": //Ver Private Key
-                var privateKeyXml = File.ReadAllText(privateKeyFile);
+                var privateKeyXml = aesE.decrypt(File.ReadAllText(privateKeyFile));
                 Console.WriteLine("A sua chave privada:\n" + privateKeyXml);
                 break;
 
             case "2": //Ver Public Key
                 var publicKeyXml = File.ReadAllText(publicKeyFile);
-                Console.WriteLine("A sua chave privada:\n" + publicKeyXml);
+                Console.WriteLine("A sua chave publica:\n" + publicKeyXml);
                 break;
 
             case "3": //Gerar novas Keys
