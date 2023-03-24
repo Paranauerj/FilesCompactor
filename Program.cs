@@ -12,6 +12,16 @@ void ShowMenu()
     Console.WriteLine("4- SAIR");
 }
 
+void ShowMenuOP3()
+{
+    Console.Clear();
+    Console.WriteLine("***DEFENIÇÕES***");
+    Console.WriteLine("1- Ver Private Key");
+    Console.WriteLine("2- Ver Public Key");
+    Console.WriteLine("3- Criar novo par de Keys");
+    Console.WriteLine("4- SAIR");
+}
+
 void Op1()
 {
     Console.WriteLine("Qual é o diretório do(s) ficheiro(s) que pretende comprimir?\n(Para usar o caminho padrão, não escrever nada)");
@@ -49,12 +59,54 @@ void Op2()
     Console.ReadKey();
 }
 
+void Op3_3()
+{
+    Console.WriteLine("Tem a certeza que quer criar um novo par de Keys?");
+    Console.WriteLine("Escreva \"Sim\" para confirmar");
+    Console.Write("->");
+    string? conf = Console.ReadLine();
+
+    if(conf != "Sim")
+    {
+        Console.WriteLine("Confirmação negada!");
+        Console.WriteLine("Pressione qualquer tecla para avançar");
+        Console.ReadKey();
+    }
+    else
+    {
+        Console.WriteLine("Confirmação aceite!");
+        //Gera novas keys
+    }
+}
+
 void Op3()
 {
-    Console.WriteLine("Em construção!!!");
+    while (true)
+    {
+        ShowMenuOP3();
 
-    Console.WriteLine("Pressione qualquer tecla para avançar");
-    Console.ReadKey();
+        Console.Write("Opção: ");
+        var op = Console.ReadLine();
+        Console.Clear();
+
+        switch (op)
+        {
+            case "1": //Ver Private Key
+                //TODO
+                break;
+
+            case "2": //Ver Public Key
+                //TODO
+                break;
+
+            case "3": //Gerar novas Keys
+                Op3_3();
+                break;
+
+            case "4": //EXIT
+                return;
+        }
+    }
 }
 
 while (true)
