@@ -24,7 +24,7 @@ namespace Projeto1Criptografia
             aesAlgorithm.IV = Convert.FromBase64String(ivBase64);
         }
 
-        public override string decrypt(string strToDecrypt)
+        public string decrypt(string strToDecrypt)
         {
             ICryptoTransform decryptor = aesAlgorithm.CreateDecryptor();
             byte[] cipher = Convert.FromBase64String(strToDecrypt);
@@ -41,7 +41,7 @@ namespace Projeto1Criptografia
             }
         }
 
-        public override string encrypt(string strToEncrypt)
+        public string encrypt(string strToEncrypt)
         {
             ICryptoTransform encryptor = aesAlgorithm.CreateEncryptor();
             byte[] encryptedData;

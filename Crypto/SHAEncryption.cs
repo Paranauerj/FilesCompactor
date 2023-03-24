@@ -17,7 +17,7 @@ namespace Projeto1Criptografia
             this.shaAlgorithm = SHA256.Create();
         }
 
-        public override string encrypt(string strToEncrypt)
+        public string encrypt(string strToEncrypt)
         {
             byte[] bytes = shaAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(strToEncrypt));
 
@@ -27,6 +27,11 @@ namespace Projeto1Criptografia
                 builder.Append(bytes[i].ToString("x2"));
             }
             return builder.ToString();
+        }
+
+        public string decrypt(string strToDecrypt)
+        {
+            throw new NotImplementedException();
         }
     }
 }

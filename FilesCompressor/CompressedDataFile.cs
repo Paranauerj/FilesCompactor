@@ -12,6 +12,7 @@ namespace Projeto1Criptografia
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Signature { get; set; }
+        public string CreatorPublicKey { get; set; }
         public string Hash { get; set; }
         public string Password { get; set; }
 

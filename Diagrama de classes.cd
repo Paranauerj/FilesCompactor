@@ -1,25 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Projeto1Criptografia.AESEncryption">
-    <Position X="4" Y="2.5" Width="1.5" />
+    <Position X="6" Y="1.75" Width="2" />
+    <Members>
+      <Method Name="AESEncryption" Hidden="true" />
+    </Members>
     <TypeIdentifier>
       <HashCode>ABAAAAEAAAACAAAAAAAAEAAAABAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AESEncryption.cs</FileName>
+      <FileName>Crypto\AESEncryption.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="Projeto1Criptografia.Encryption">
-    <Position X="5.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Encryption.cs</FileName>
-    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Projeto1Criptografia.SHAEncryption">
-    <Position X="6.5" Y="2.5" Width="1.5" />
+    <Position X="6" Y="4.75" Width="2" />
+    <Members>
+      <Method Name="SHAEncryption" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
-      <FileName>SHAEncryption.cs</FileName>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Crypto\SHAEncryption.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projeto1Criptografia.RSAEncryption">
+    <Position X="2.5" Y="2.75" Width="2" />
+    <Members>
+      <Method Name="ExportPrivateKeyToXmlString" Hidden="true" />
+      <Method Name="ExportPublicKeyToXmlString" Hidden="true" />
+      <Method Name="generateNewKeys" Hidden="true" />
+      <Method Name="ImportPrivateKeyFromXmlString" Hidden="true" />
+      <Method Name="ImportPublicKeyFromXmlString" Hidden="true" />
+      <Method Name="RSAEncryption" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAABQAEAAAAgAAAABAAAECBABQACAAAAAIAAACCAAAA=</HashCode>
+      <FileName>Crypto\RSAEncryption.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Projeto1Criptografia.Compressor">
+    <Position X="9.5" Y="2.75" Width="2" />
+    <Members>
+      <Method Name="GetAndEncryptAllFilesInFolderAndSubfolders" Hidden="true" />
+      <Method Name="WriteAllEncryptedDataInFiles" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAACAAAQAAAACAAIAQAAAAAAAAAg=</HashCode>
+      <FileName>FilesCompressor\Compressor.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Projeto1Criptografia.FileCompressed">
+    <Position X="13.25" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>FilesCompressor\FileCompressed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projeto1Criptografia.CompressedDataFile">
+    <Position X="13.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAIAAAAAAAAAAAUAAAAAAAADAAAAAACAAAE=</HashCode>
+      <FileName>FilesCompressor\CompressedDataFile.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="FilesCompressed" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Interface Name="Projeto1Criptografia.Signing">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Crypto\Signing.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Projeto1Criptografia.Encryption">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Crypto\Encryption.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

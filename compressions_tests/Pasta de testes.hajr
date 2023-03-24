@@ -1,8 +1,9 @@
 {
   "Name": "Pasta de testes",
-  "Date": "2023-03-23T22:23:42.6982375+00:00",
-  "Signature": "5Mke9z6X0FmP9FfVFx2JUleDsQm9/oNduyrH2Wf8r2qZv8O6pBSqiR9ijjYR6xTGit3zn9Esjn2oNwJSEcFMZhx/ESRGBzlNiRKaylu03qQA6ueczfBy9/Hejlhcg9bEUy0sweRp08/zTYCh4Rswde7GgkbISMOGCTfN50Mzq3k=",
-  "Hash": "850623e6755104627656ecbb483b561401e94e7ded304db9fe6d44523130335c",
+  "Date": "2023-03-24T01:01:22.9401904+00:00",
+  "Signature": "SLRn7++DByzZpBSKIz0yW3jjftoPnKUkMQcDNIjarBtosvX9wq5SbG1CX1B4kCsQiyKii+r8zUoveWf4ZVrsLphRKC12XUITRjlgrnmdwpd+uKpUd4u1tc/9eLh0tLL1HItZy3ZTujdyYTJ8rZMZff7VRIYo5hICgW2SEer7FWU25SOtWjmjPQC7ym8s9N3QKGv0AgzLlV3R+jFpzQ5hLv17x2ctho3sh2bq0yKW4/WviMyQX9ebBrE9gypilfhLf7yLzRNk2aXrHTiGXp1jbmNh9SHOcGWxtOmidzNLcQh6kchoSrc8H3G+6A7uwVsG2r3klA5XzgCELvbVwCOMBWExYWU1OGRkMDEwN2MxNTE3YmMwMDFjZTA2MzQxMzE0MzEyMWUxMmU1ZDc5YjdiNjc5OGE2YjUxMjMyNGU0MDE=",
+  "CreatorPublicKey": "<RSAKeyValue><Modulus>2/jn6o2Ljqpik4GGE7URfMoWIitjZ9OlP4Kh6VdsoVyJN/xNkeR+HZAIl9sodh63kWun/eLcXOR1gRwEbiV+4qyJw1t3lXbNtFc8EiEjjoU+YkoBoSYW/m8lK00sQOsHUbPLJZSReilIx+9JtMuadP/8QdE2HJbyVX7YOFKLSTfbuIFLgkOJmiqjl+XiWGNpkA4qvvwhgLZniJbOUNH6uG2umOrdJu96iBpG6b+KnwKiiq2N+U9efTx5MgSKid/0jRGHH1rIT+k0fVkfsf3iC3RoF9AYj1h0el3NiRD6UHhustsNWJ3ue7nl8C9S2MB0WlJVA/2NxZ1kOvN06JH+3Q==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>",
+  "Hash": "a1ae58dd0107c1517bc001ce063413143121e12e5d79b7b6798a6b512324e401",
   "Password": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "FilesCompressed": [
     {

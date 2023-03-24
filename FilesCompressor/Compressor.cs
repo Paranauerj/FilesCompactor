@@ -13,13 +13,13 @@ namespace Projeto1Criptografia
 
         private AESEncryption AESEncryption { get; }
         private SHAEncryption SHAEncryption { get; }
-        private RSA_Encryption RSA_Encryption { get; }
+        private RSAEncryption RSAEncryption { get; }
 
         public Compressor()
         {
             AESEncryption = new AESEncryption();
             SHAEncryption = new SHAEncryption();
-            RSA_Encryption = new RSA_Encryption();
+            RSAEncryption = new RSAEncryption();
             
             // Algumas observações
             /*
@@ -35,12 +35,60 @@ namespace Projeto1Criptografia
         {
             string rootFolder = targetDirectoryArg == "" ? @"../../../decompression_tests/Pasta de testes" : targetDirectoryArg;
 
-            var compressedFiles = new List<FileCompressed>();
-            var compressedDataFile = new CompressedDataFile();
+            var compressedDataFile = new CompressedDataFile()
+            {
+                Date = DateTime.Now,
+                Name = Path.GetFileName(rootFolder),
+                Password = this.SHAEncryption.encrypt(password)
+            };
 
-            compressedDataFile.Date = DateTime.Now;
-            compressedDataFile.Name = Path.GetFileName(rootFolder);
-            compressedDataFile.Password = this.SHAEncryption.encrypt(password);
+            compressedDataFile.FilesCompressed = this.GetAndEncryptAllFilesInFolderAndSubfolders(rootFolder);
+
+            compressedDataFile.Hash = this.SHAEncryption.encrypt(compressedDataFile.getPayload());
+
+            compressedDataFile.Signature = RSAEncryption.GenerateSignature(compressedDataFile.Hash);
+            compressedDataFile.CreatorPublicKey = RSAEncryption.GetPublicKeyXML();
+
+            string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
+            File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", json);
+            Console.WriteLine("Compressão terminada");
+        }
+
+        public void Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
+        {
+            string file = fileWithPath == "" ? @"../../../compressions_tests/Pasta de testes.hajr" : fileWithPath;
+            string fileContent = File.ReadAllText(file);
+
+            var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
+
+            if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
+            {
+                Console.WriteLine("Nao foi possivel garantir a integridade do ficheiro!");
+                return;
+            }
+
+            if (compressedDataFile.Password != this.SHAEncryption.encrypt(password))
+            {
+                Console.WriteLine("Palavra-passe invalida");
+                return;
+            }
+
+            if (!RSAEncryption.VerifySignature(compressedDataFile.Signature, compressedDataFile.CreatorPublicKey))
+            {
+                Console.WriteLine("Assinatura inválida");
+                return;
+            }
+
+            var targetDirectory = (targetDirectoryArg == "" ? @"../../../decompression_tests/" : targetDirectoryArg) + compressedDataFile.Name;
+            Directory.CreateDirectory(targetDirectory);
+
+            this.WriteAllEncryptedDataInFiles(compressedDataFile.FilesCompressed, targetDirectory);
+            Console.WriteLine("Descompressão terminada");
+        }
+
+        private List<FileCompressed> GetAndEncryptAllFilesInFolderAndSubfolders(string rootFolder)
+        {
+            var compressedFiles = new List<FileCompressed>();
 
             string[] allFiles = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
             foreach (string file in allFiles)
@@ -56,62 +104,13 @@ namespace Projeto1Criptografia
                 });
             }
 
-            compressedDataFile.FilesCompressed = compressedFiles;
-
-            compressedDataFile.Hash = this.SHAEncryption.encrypt(compressedDataFile.getPayload());
-
-            // Assinar ficheiro com RSA
-            compressedDataFile.Signature = RSA_Encryption.GenerateSignature(compressedDataFile.Hash);
-
-            string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
-            File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", json);
+            return compressedFiles;
 
         }
 
-        public void Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
+        private void WriteAllEncryptedDataInFiles(List<FileCompressed> filesCompressed, string targetDirectory)
         {
-            string file = fileWithPath == "" ? @"../../../compressions_tests/Pasta de testes.hajr" : fileWithPath;
-            string fileContent = File.ReadAllText(file);
-
-            var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
-
-            // Verifica se o hash atual coincide com o conteúdo do ficheiro. Se não for, diz e para de executar
-            if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
-            {
-                Console.WriteLine("Nao foi possivel garantir a integridade do ficheiro!");
-                return;
-            }
-
-            if (compressedDataFile.Password != this.SHAEncryption.encrypt(password))
-            {
-                Console.WriteLine("Palavra-passe invalida");
-                return;
-            }
-
-            // verificar a assinatura. se for inválida, dizer q é inválida e parar execução
-            string signature = compressedDataFile.Signature;
-            byte[] sign = Convert.FromBase64String(signature);
-
-
-            if (sign == null)
-            {
-                Console.WriteLine("Sem assinatura");
-                return;
-            }
-
-            //if (rsa.VerifySignature(Convert.ToBase64String(compressedDataFile.GetBytes(compressedDataFile.FilesCompressed)), sign, this.publicKey))
-            if (RSA_Encryption.VerifySignature(compressedDataFile.Hash, sign, RSA_Encryption.creatorPublicKey))
-                Console.WriteLine("Assinatura Válida");
-            else
-            {
-                Console.WriteLine("Assinatura inválida");
-                return;
-            }
-
-            var targetDirectory = (targetDirectoryArg == "" ? @"../../../decompression_tests/" : targetDirectoryArg) + compressedDataFile.Name;
-            Directory.CreateDirectory(targetDirectory);
-
-            foreach(var fileToWrite in compressedDataFile.FilesCompressed)
+            foreach (var fileToWrite in filesCompressed)
             {
                 var filePath = targetDirectory + "/" + fileToWrite.Name;
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -124,9 +123,10 @@ namespace Projeto1Criptografia
                 }
                 catch
                 {
-                    // Console.WriteLine("Ocorreu um problema ao salvar o ficheiro {0}. Ele pode ter sido corrompido ou decomprimido com sucesso. Abra-o e verifique", filePath);
+                    Console.WriteLine("Ocorreu um problema ao salvar o ficheiro {0}. Ele pode ter sido corrompido ou decomprimido com sucesso. Abra-o e verifique", filePath);
                 }
             }
         }
+
     }
 }
