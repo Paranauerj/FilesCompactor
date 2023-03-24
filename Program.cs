@@ -1,6 +1,7 @@
 ﻿using Projeto1Criptografia;
 
 var comp = new Compressor();
+var rsaE = new RSAEncryption();
 
 void ShowMenu()
 {
@@ -19,7 +20,7 @@ void ShowMenuOP3()
     Console.WriteLine("1- Ver Private Key");
     Console.WriteLine("2- Ver Public Key");
     Console.WriteLine("3- Criar novo par de Keys");
-    Console.WriteLine("4- SAIR");
+    Console.WriteLine("4- VOLTAR");
 }
 
 void Op1()
@@ -59,14 +60,14 @@ void Op2()
     Console.ReadKey();
 }
 
-void Op3_3()
+void Op3_3(string publicKeyFile, string privateKeyFile)
 {
     Console.WriteLine("Tem a certeza que quer criar um novo par de Keys?");
     Console.WriteLine("Escreva \"Sim\" para confirmar");
     Console.Write("->");
     string? conf = Console.ReadLine();
 
-    if(conf != "Sim")
+    if(conf.ToLower() != "sim")
     {
         Console.WriteLine("Confirmação negada!");
         Console.WriteLine("Pressione qualquer tecla para avançar");
@@ -75,7 +76,16 @@ void Op3_3()
     else
     {
         Console.WriteLine("Confirmação aceite!");
-        //Gera novas keys
+
+        if (File.Exists(publicKeyFile))
+            File.Delete(publicKeyFile);
+
+        if (File.Exists(privateKeyFile))
+            File.Delete(privateKeyFile);
+
+        comp = new Compressor();
+
+        Console.WriteLine("Par de Keys alterado com sucesso!");
     }
 }
 
@@ -84,6 +94,8 @@ void Op3()
     while (true)
     {
         ShowMenuOP3();
+        string publicKeyFile = "./public.txt";
+        string privateKeyFile = "./private.txt";
 
         Console.Write("Opção: ");
         var op = Console.ReadLine();
@@ -92,20 +104,25 @@ void Op3()
         switch (op)
         {
             case "1": //Ver Private Key
-                //TODO
+                var privateKeyXml = File.ReadAllText(privateKeyFile);
+                Console.WriteLine("A sua chave privada:\n" + privateKeyXml);
                 break;
 
             case "2": //Ver Public Key
-                //TODO
+                var publicKeyXml = File.ReadAllText(publicKeyFile);
+                Console.WriteLine("A sua chave privada:\n" + publicKeyXml);
                 break;
 
             case "3": //Gerar novas Keys
-                Op3_3();
+                Op3_3(publicKeyFile, privateKeyFile);
                 break;
 
-            case "4": //EXIT
+            case "4": //VOLTAR
                 return;
         }
+
+        Console.WriteLine("\nPressione qualquer tecla para avançar");
+        Console.ReadKey();
     }
 }
 
@@ -118,19 +135,19 @@ while (true)
 
     switch (op)
     {
-        case "1":
+        case "1": //Comprimir Ficheiro
             Op1();
             break;
 
-        case "2":
+        case "2": //Descomprimir Ficheiro
             Op2();
             break;
 
-        case "3":
+        case "3": //Defenições
             Op3();
             break;
 
-        case "4":
+        case "4": //Dar o fora daqui
             return;
     }
 }
