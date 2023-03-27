@@ -54,7 +54,7 @@ namespace Projeto1Criptografia
             Console.WriteLine("Compressão terminada");
         }
 
-        public void Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
+        public int Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
         {
             string file = fileWithPath == "" ? @"../../../compressions_tests/Pasta de testes.hajr" : fileWithPath;
             string fileContent = File.ReadAllText(file);
@@ -64,19 +64,19 @@ namespace Projeto1Criptografia
             if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
             {
                 Console.WriteLine("Nao foi possivel garantir a integridade do ficheiro!");
-                return;
+                return 1;
             }
 
             if (compressedDataFile.Password != this.SHAEncryption.encrypt(password))
             {
                 Console.WriteLine("Palavra-passe invalida");
-                return;
+                return 2;
             }
 
             if (!RSAEncryption.VerifySignature(compressedDataFile.Signature, compressedDataFile.CreatorPublicKey))
             {
                 Console.WriteLine("Assinatura inválida");
-                return;
+                return 3;
             }
 
             var targetDirectory = (targetDirectoryArg == "" ? @"../../../decompression_tests/" : targetDirectoryArg) + compressedDataFile.Name;
@@ -84,6 +84,7 @@ namespace Projeto1Criptografia
 
             this.WriteAllEncryptedDataInFiles(compressedDataFile.FilesCompressed, targetDirectory);
             Console.WriteLine("Descompressão terminada");
+            return 0;
         }
 
         private List<FileCompressed> GetAndEncryptAllFilesInFolderAndSubfolders(string rootFolder)
