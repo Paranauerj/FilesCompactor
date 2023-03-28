@@ -9,14 +9,14 @@ void ShowMenu()
     Console.WriteLine("***MENU***");
     Console.WriteLine("1- Comprimir Ficheiro");
     Console.WriteLine("2- Descomprimir Ficheiro");
-    Console.WriteLine("3- Defenições");
+    Console.WriteLine("3- Definições");
     Console.WriteLine("4- SAIR");
 }
 
 void ShowMenuOP3()
 {
     Console.Clear();
-    Console.WriteLine("***DEFENIÇÕES***");
+    Console.WriteLine("***DEFINIÇÕES***");
     Console.WriteLine("1- Ver Private Key");
     Console.WriteLine("2- Ver Public Key");
     Console.WriteLine("3- Criar novo par de Keys");
@@ -172,7 +172,7 @@ while (true)
             Op2();
             break;
 
-        case "3": //Defenições
+        case "3": //Definições
             Op3();
             break;
 

@@ -47,6 +47,7 @@ namespace Projeto1Criptografia
 
             if (!CheckFileOrFolderExists(rootFolder))
             {
+                Console.WriteLine("Nao foi possivel encontrar o caminho");
                 return OperationOutput.PathNotFound;
             }
 
@@ -77,6 +78,7 @@ namespace Projeto1Criptografia
 
             if (!CheckFileOrFolderExists(file))
             {
+                Console.WriteLine("Nao foi possivel encontrar o ficheiro");
                 return OperationOutput.PathNotFound;
             }
 
