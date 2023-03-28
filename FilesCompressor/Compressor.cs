@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 
 namespace Projeto1Criptografia
 {
+    public enum OperationOutput
+    {
+        OK,
+        IntegrityError,
+        InvalidPassword,
+        InvalidSignature,
+        FileNotFound,
+        PathNotFound
+    }
+
     public class Compressor
     {
 
@@ -31,9 +41,14 @@ namespace Projeto1Criptografia
              */
         }
 
-        public void Compress(string password = "", string targetDirectoryArg = "", string pathToSave = "")
+        public OperationOutput Compress(string password = "", string targetDirectoryArg = "", string pathToSave = "")
         {
             string rootFolder = targetDirectoryArg == "" ? @"../../../decompression_tests/Pasta de testes" : targetDirectoryArg;
+
+            if (!CheckFileOrFolderExists(rootFolder))
+            {
+                return OperationOutput.PathNotFound;
+            }
 
             var compressedDataFile = new CompressedDataFile()
             {
@@ -52,31 +67,40 @@ namespace Projeto1Criptografia
             string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
             File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", json);
             Console.WriteLine("Compressão terminada");
+
+            return OperationOutput.OK;
         }
 
-        public int Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
+        public OperationOutput Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
         {
             string file = fileWithPath == "" ? @"../../../compressions_tests/Pasta de testes.hajr" : fileWithPath;
+
+            if (!CheckFileOrFolderExists(file))
+            {
+                return OperationOutput.PathNotFound;
+            }
+
             string fileContent = File.ReadAllText(file);
 
             var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
+            compressedDataFile.ListFiles();
 
             if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
             {
                 Console.WriteLine("Nao foi possivel garantir a integridade do ficheiro!");
-                return 1;
+                return OperationOutput.IntegrityError;
             }
 
             if (compressedDataFile.Password != this.SHAEncryption.encrypt(password))
             {
                 Console.WriteLine("Palavra-passe invalida");
-                return 2;
+                return OperationOutput.InvalidPassword;
             }
 
             if (!RSAEncryption.VerifySignature(compressedDataFile.Signature, compressedDataFile.CreatorPublicKey))
             {
                 Console.WriteLine("Assinatura inválida");
-                return 3;
+                return OperationOutput.InvalidSignature;
             }
 
             var targetDirectory = (targetDirectoryArg == "" ? @"../../../decompression_tests/" : targetDirectoryArg) + compressedDataFile.Name;
@@ -84,7 +108,7 @@ namespace Projeto1Criptografia
 
             this.WriteAllEncryptedDataInFiles(compressedDataFile.FilesCompressed, targetDirectory);
             Console.WriteLine("Descompressão terminada");
-            return 0;
+            return OperationOutput.OK;
         }
 
         private List<FileCompressed> GetAndEncryptAllFilesInFolderAndSubfolders(string rootFolder)
@@ -126,6 +150,18 @@ namespace Projeto1Criptografia
                 {
                     Console.WriteLine("Ocorreu um problema ao salvar o ficheiro {0}. Ele pode ter sido corrompido ou decomprimido com sucesso. Abra-o e verifique", filePath);
                 }
+            }
+        }
+
+        private bool CheckFileOrFolderExists(string path)
+        {
+            if (File.Exists(path) || Directory.Exists(path))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

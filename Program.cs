@@ -40,7 +40,7 @@ void Op1()
 
 void Op2()
 {
-    int erro = -1, tentativa = 0;
+    int tentativa = 0;
 
     Console.WriteLine("Qual é o diretório do ficheiro que pretende descomprimir?\n(Para usar o caminho padrão, não escrever nada)");
     string? fileWithPath = Console.ReadLine();
@@ -56,15 +56,19 @@ void Op2()
     Console.WriteLine("Qual é a palavra pass?");
     string? password = Console.ReadLine();
 
-    erro = comp.Decompress(password, fileWithPath, targetDirectoryArg); //0: Tudo correu bem
+    OperationOutput erro = comp.Decompress(password, fileWithPath, targetDirectoryArg); 
+
+                                                                        //0: Tudo correu bem
                                                                         //1: Nao foi possivel garantir a integridade do ficheiro!
                                                                         //2: Palavra-passe invalida [Aumentar o numero de tentativa, às 3 sai]
                                                                         //3: Assinatura inválida
+                                                                        //4: Ficheiro inexistente
+                                                                        //5: Caminho inexistente
 
-    if (erro == 1 && erro == 3)
+    if (erro == OperationOutput.IntegrityError && erro == OperationOutput.InvalidSignature)
         return;
 
-    while (erro == 2)
+    while (erro == OperationOutput.InvalidPassword)
     {
         if (tentativa == 3)
         {

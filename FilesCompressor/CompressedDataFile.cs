@@ -18,9 +18,6 @@ namespace Projeto1Criptografia
 
         public List<FileCompressed> FilesCompressed { get; set; }
 
-        //publicKey do criador
-        //assinatua do criador
-
         public string getPayload()
         {
             string payload = "name:" + this.Name + "date:" + this.Date.ToString();
@@ -32,5 +29,16 @@ namespace Projeto1Criptografia
 
             return payload;
         }
+
+        public void ListFiles()
+        {
+            Console.WriteLine("\n######## Ficheiros #########");
+            foreach(var item in this.FilesCompressed)
+            {
+                Console.WriteLine("- " + item.Name);
+            }
+            Console.WriteLine("");
+        }
+
     }
 }
