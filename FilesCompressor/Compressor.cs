@@ -66,7 +66,8 @@ namespace Projeto1Criptografia
             compressedDataFile.CreatorPublicKey = RSAEncryption.GetPublicKeyXML();
 
             string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
-            File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", json);
+            string jsonEncrypted = this.AESEncryption.encrypt(json);
+            File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", jsonEncrypted);
             Console.WriteLine("Compressão terminada");
 
             return OperationOutput.OK;
@@ -82,7 +83,8 @@ namespace Projeto1Criptografia
                 return OperationOutput.PathNotFound;
             }
 
-            string fileContent = File.ReadAllText(file);
+            string fileContentEncrypted = File.ReadAllText(file);
+            string fileContent = this.AESEncryption.decrypt(fileContentEncrypted);
 
             var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
             compressedDataFile.ListFiles();

@@ -20,7 +20,7 @@ namespace Projeto1Criptografia
 
         public string getPayload()
         {
-            string payload = "name:" + this.Name + "date:" + this.Date.ToString();
+            string payload = "name:" + this.Name + "date:" + this.Date.ToString() + "password:" + this.Password;
 
             foreach(var file in FilesCompressed)
             {
