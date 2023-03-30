@@ -156,6 +156,10 @@ void Op3()
 
             case "4": //VOLTAR
                 return;
+
+            default:
+                Console.WriteLine("Opção inválida");
+                break;
         }
 
         Console.WriteLine("\nPressione qualquer tecla para avançar");
@@ -186,7 +190,14 @@ while (true)
 
         case "4": //Dar o fora daqui
             return;
+
+        default:
+            Console.WriteLine("Opção inválida");
+            break;
     }
+
+    Console.WriteLine("\nPressione qualquer tecla para avançar");
+    Console.ReadKey();
 }
 
 // comp.Compress(targetDirectoryArg: @"D:\Users\jptin\Desktop\Programação\só testando utad", pathToSave: @"D:\Users\jptin\Desktop\Programação\", password: "oi");
