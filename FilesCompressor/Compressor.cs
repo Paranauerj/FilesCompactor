@@ -87,7 +87,6 @@ namespace Projeto1Criptografia
             string fileContent = this.AESEncryption.decrypt(fileContentEncrypted);
 
             var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
-            compressedDataFile.ListFiles();
 
             if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
             {
@@ -111,6 +110,8 @@ namespace Projeto1Criptografia
             Directory.CreateDirectory(targetDirectory);
 
             this.WriteAllEncryptedDataInFiles(compressedDataFile.FilesCompressed, targetDirectory);
+            compressedDataFile.ListFiles();
+
             Console.WriteLine("Descompressão terminada");
             return OperationOutput.OK;
         }
