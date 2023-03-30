@@ -46,7 +46,7 @@ void Op2()
     string? fileWithPath = Console.ReadLine();
     Console.WriteLine("Qual é o diretório onde pretende guardar o(s) ficheiro(s) descomprimido(s)?\n(Para usar o caminho padrão, não escrever nada)");
     string? targetDirectoryArg = Console.ReadLine();
-
+    
     if (targetDirectoryArg != null)
     {
         if (!targetDirectoryArg.EndsWith("\\"))
@@ -57,13 +57,6 @@ void Op2()
     string? password = Console.ReadLine();
 
     OperationOutput erro = comp.Decompress(password, fileWithPath, targetDirectoryArg); 
-
-                                                                        //0: Tudo correu bem
-                                                                        //1: Nao foi possivel garantir a integridade do ficheiro!
-                                                                        //2: Palavra-passe invalida [Aumentar o numero de tentativa, às 3 sai]
-                                                                        //3: Assinatura inválida
-                                                                        //4: Ficheiro inexistente
-                                                                        //5: Caminho inexistente
 
     if (erro == OperationOutput.IntegrityError && erro == OperationOutput.InvalidSignature)
         return;
@@ -83,7 +76,22 @@ void Op2()
 
         tentativa++;
     }
-    
+
+    while (erro == OperationOutput.FileNotFound)
+    {
+        Console.WriteLine("Qual é o diretório do ficheiro que pretende descomprimir ?\n(Para usar o caminho padrão, não escrever nada)");
+        fileWithPath = Console.ReadLine();
+
+        erro = comp.Decompress(password, fileWithPath, targetDirectoryArg);
+    }
+
+    while (erro == OperationOutput.PathNotFound)
+    {
+        Console.WriteLine("Qual é o diretório onde pretende guardar o(s) ficheiro(s) descomprimido(s)?\n(Para usar o caminho padrão, não escrever nada)");
+        targetDirectoryArg = Console.ReadLine();
+
+        erro = comp.Decompress(password, fileWithPath, targetDirectoryArg);
+    }
 
     Console.WriteLine("Pressione qualquer tecla para avançar");
     Console.ReadKey();
