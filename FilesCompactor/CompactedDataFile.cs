@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Projeto1Criptografia
 {
-    public class CompressedDataFile
+    public class CompactedDataFile
     {
         public string Name { get; set; }
         public DateTime Date { get; set; }
@@ -16,7 +16,7 @@ namespace Projeto1Criptografia
         public string Hash { get; set; }
         public string Password { get; set; }
 
-        public List<FileCompressed> FilesCompressed { get; set; }
+        public List<FileCompacted> FilesCompressed { get; set; }
 
         public string getPayload()
         {

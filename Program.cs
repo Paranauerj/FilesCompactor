@@ -1,6 +1,6 @@
 ﻿using Projeto1Criptografia;
 
-var comp = new Compressor();
+var comp = new Compactor();
 var aesE = new AESEncryption();
 
 void ShowMenu()
@@ -120,7 +120,7 @@ void Op3_3(string publicKeyFile, string privateKeyFile)
         if (File.Exists(privateKeyFile))
             File.Delete(privateKeyFile);
 
-        comp = new Compressor();
+        comp = new Compactor();
 
         Console.WriteLine("Par de Keys alterado com sucesso!");
     }

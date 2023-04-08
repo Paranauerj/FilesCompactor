@@ -38,29 +38,29 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Projeto1Criptografia.Compressor">
+  <Class Name="Projeto1Criptografia.Compactor">
     <Position X="9.5" Y="2.75" Width="2" />
     <Members>
       <Method Name="GetAndEncryptAllFilesInFolderAndSubfolders" Hidden="true" />
       <Method Name="WriteAllEncryptedDataInFiles" Hidden="true" />
     </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAACAAAQAAAACAAIAQAAAAAAAAAg=</HashCode>
-      <FileName>FilesCompressor\Compressor.cs</FileName>
+      <HashCode>AAAAAAAAABAAAAAAAACAAAQAAAACAAIAQAAAAACAAAg=</HashCode>
+      <FileName>FilesCompressor\Compactor.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Projeto1Criptografia.FileCompressed">
+  <Class Name="Projeto1Criptografia.FileCompacted">
     <Position X="13.25" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAABAAAAAAAAAAAAA=</HashCode>
-      <FileName>FilesCompressor\FileCompressed.cs</FileName>
+      <FileName>FilesCompressor\FileCompacted.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Projeto1Criptografia.CompressedDataFile">
+  <Class Name="Projeto1Criptografia.CompactedDataFile">
     <Position X="13.25" Y="1.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQAAAIAAAAAAAAAAAUAAAAAAAADAAAAAACAAAE=</HashCode>
-      <FileName>FilesCompressor\CompressedDataFile.cs</FileName>
+      <HashCode>EAAAAAQAAAIAAAAAAAAAAAUAAAAAAAADAAAAAACAAAE=</HashCode>
+      <FileName>FilesCompressor\CompactedDataFile.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="FilesCompressed" />

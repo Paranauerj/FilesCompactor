@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projeto1Criptografia
 {
-    public class FileCompressed
+    public class FileCompacted
     {
         public string Name { get; set; }   
         public string Data { get;set; }

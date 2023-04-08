@@ -18,14 +18,14 @@ namespace Projeto1Criptografia
         PathNotFound
     }
 
-    public class Compressor
+    public class Compactor
     {
 
         private AESEncryption AESEncryption { get; }
         private SHAEncryption SHAEncryption { get; }
         private RSAEncryption RSAEncryption { get; }
 
-        public Compressor()
+        public Compactor()
         {
             AESEncryption = new AESEncryption();
             SHAEncryption = new SHAEncryption();
@@ -51,7 +51,7 @@ namespace Projeto1Criptografia
                 return OperationOutput.PathNotFound;
             }
 
-            var compressedDataFile = new CompressedDataFile()
+            var compressedDataFile = new CompactedDataFile()
             {
                 Date = DateTime.Now,
                 Name = Path.GetFileName(rootFolder),
@@ -86,7 +86,7 @@ namespace Projeto1Criptografia
             string fileContentEncrypted = File.ReadAllText(file);
             string fileContent = this.AESEncryption.decrypt(fileContentEncrypted);
 
-            var compressedDataFile = JsonConvert.DeserializeObject<CompressedDataFile>(fileContent);
+            var compressedDataFile = JsonConvert.DeserializeObject<CompactedDataFile>(fileContent);
 
             if (compressedDataFile.Hash != this.SHAEncryption.encrypt(compressedDataFile.getPayload()))
             {
@@ -116,9 +116,9 @@ namespace Projeto1Criptografia
             return OperationOutput.OK;
         }
 
-        private List<FileCompressed> GetAndEncryptAllFilesInFolderAndSubfolders(string rootFolder)
+        private List<FileCompacted> GetAndEncryptAllFilesInFolderAndSubfolders(string rootFolder)
         {
-            var compressedFiles = new List<FileCompressed>();
+            var compressedFiles = new List<FileCompacted>();
 
             string[] allFiles = Directory.GetFiles(rootFolder, "*.*", SearchOption.AllDirectories);
             foreach (string file in allFiles)
@@ -127,7 +127,7 @@ namespace Projeto1Criptografia
                 byte[] fileContentInBytes = File.ReadAllBytes(file);
                 string fileContent = Convert.ToBase64String(fileContentInBytes);
 
-                compressedFiles.Add(new FileCompressed()
+                compressedFiles.Add(new FileCompacted()
                 {
                     Name = fileName,
                     Data = this.AESEncryption.encrypt(fileContent)
@@ -138,7 +138,7 @@ namespace Projeto1Criptografia
 
         }
 
-        private void WriteAllEncryptedDataInFiles(List<FileCompressed> filesCompressed, string targetDirectory)
+        private void WriteAllEncryptedDataInFiles(List<FileCompacted> filesCompressed, string targetDirectory)
         {
             foreach (var fileToWrite in filesCompressed)
             {
