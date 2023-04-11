@@ -15,7 +15,8 @@ namespace Projeto1Criptografia
         InvalidPassword,
         InvalidSignature,
         FileNotFound,
-        PathNotFound
+        PathNotFound,
+        PermissionDenied
     }
 
     public class Compactor
@@ -67,10 +68,19 @@ namespace Projeto1Criptografia
 
             string json = JsonConvert.SerializeObject(compressedDataFile, Formatting.Indented);
             string jsonEncrypted = this.AESEncryption.encrypt(json);
-            File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", jsonEncrypted);
-            Console.WriteLine("Compressão terminada");
 
-            return OperationOutput.OK;
+            try
+            {
+                File.WriteAllText((pathToSave == "" ? "../../../compressions_tests/" : pathToSave) + compressedDataFile.Name + ".hajr", jsonEncrypted);
+                Console.WriteLine("Compressão terminada");
+                return OperationOutput.OK;
+            }
+            catch
+            {
+                Console.WriteLine("Permissão negada - experimente desabilitar o antivirus temporariamente ou abrir uma exceção para o programa\nPode ainda tentar executar como administrador");
+                return OperationOutput.PermissionDenied;
+            }
+
         }
 
         public OperationOutput Decompress(string password = "", string fileWithPath = "", string targetDirectoryArg = "")
